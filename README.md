@@ -38,7 +38,7 @@ Tanpa `MaterialApp`, tampilan tidak akan mengikuti gaya desain _Material Design_
   Digunakan saat tampilan hanya menampilkan data statis (tidak interaktif).  
   Contoh: halaman menu utama, teks, ikon tetap.  
 - **StatefulWidget** → Punya _state_ (data atau kondisi yang bisa berubah).  
-  Digunakan untuk tampilan yang berubah karena interaksi pengguna, misalnya form input, counter, atau daftar yang bisa di-update.
+  Digunakan untuk tampilan yang berubah karena interaksi user, misalnya form input, counter, atau daftar yang bisa di-update.
 
 ## 5. **Jelaskan bagaimana cara kerja `BuildContext`.**  
 `BuildContext` adalah objek yang menyimpan posisi widget di dalam _widget tree_.
@@ -52,4 +52,34 @@ Fungsinya: mengakses data dari parent, seperti tema warna (`Theme.of(context)`) 
 
 ---
 
-## Tugas 8:  
+## Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements  
+
+## 1. **Jelaskan perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()` pada Flutter.**  
+- **`Navigator.push()`** → menambahkan halaman baru **di atas** stack navigasi jadi user masih bisa kembali ke halaman sebelumnya dengan tombol **Back**.  
+  Contoh: ketika menekan tombol **Create Product**, halaman form dibuka di atas halaman Home.  
+- **`Navigator.pushReplacement()`** → menggantikan halaman saat ini dengan halaman baru, sehingga halaman lama **tidak bisa dikembalikan** dengan tombol Back.  
+  Contoh: digunakan pada navigasi melalui **Drawer**, agar halaman tidak menumpuk ketika berpindah antar menu utama (Home ↔ Tambah Produk).
+
+## 2. **Bagaimana kamu memanfaatkan _hierarchy_ widget seperti `Scaffold`, `AppBar`, dan `Drawer` untuk membangun struktur halaman?**  
+- **`Scaffold`** → menjadi rangka utama setiap halaman; menyediakan struktur umum aplikasi seperti AppBar, Body, dan Drawer.  
+- **`AppBar`** → bagian atas halaman untuk menampilkan judul atau ikon.  
+- **`Drawer`** → panel navigasi samping yang muncul saat menekan ikon menu.
+Hierarkinya:  
+`Scaffold` sebagai parent → memiliki `AppBar` di bagian atas dan `Drawer` di sisi kiri → konten utama diatur di dalam `body`.  
+
+## 3. **Apa kelebihan menggunakan `Padding`, `SingleChildScrollView`, dan `ListView` saat menampilkan elemen-elemen form?**  
+- **`Padding`** → memberi jarak antar-elemen agar tampilan tidak menempel ke tepi screen.  
+- **`SingleChildScrollView`** → membuat isi halaman dapat di-scroll jika konten melebihi tinggi layar, mencegah error seperti *Bottom overflowed by pixels*.  
+- **`ListView`** → untuk daftar panjang elemen yang ingin ditampilkan dinamis.
+
+## 4. **Bagaimana cara kamu menerapkan warna tema yang konsisten dengan identitas brand toko?**  
+Warna utama aplikasi diatur melalui `ThemeData` di `main.dart` dengan kode:  
+```dart
+theme: ThemeData(
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+  useMaterial3: true,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.orange,
+    foregroundColor: Colors.white,
+  ),
+),
