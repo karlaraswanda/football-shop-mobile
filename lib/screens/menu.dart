@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:football_shop/widgets/left_drawer.dart';
+import 'package:football_shop/screens/product_form.dart';
 
-/// Model tombol
+// Model button
 class ItemHomepage {
   final String name;
   final IconData icon;
@@ -12,7 +14,7 @@ class ItemHomepage {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  // Data tombol
+  // Data button
   final List<ItemHomepage> items = const [
     ItemHomepage("All Products", Icons.list_alt, Colors.blue),  
     ItemHomepage("My Products", Icons.inventory_2, Colors.green), 
@@ -37,12 +39,13 @@ class MyHomePage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 3 kartu info
+            // 3 info cards
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             //   children: [
@@ -66,7 +69,7 @@ class MyHomePage extends StatelessWidget {
               crossAxisCount: 3,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              shrinkWrap: true,   // agar tidak overflow dalam Column
+              shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: items.map((item) => ItemCard(item)).toList(),
             ),
@@ -77,7 +80,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-/// Kartu informasi
+/// Info Card
 class InfoCard extends StatelessWidget {
   final String title;
   final String content;
@@ -103,7 +106,7 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-/// Kartu tombol
+// Button card
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
   const ItemCard(this.item, {super.key});
@@ -111,7 +114,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: item.color, // warna per tombol
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -135,6 +138,13 @@ class ItemCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text(message)));
+          
+          if (item.name == "Create Product") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ProductFormPage()),
+          );
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),

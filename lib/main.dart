@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:football_shop/menu.dart';
+import 'package:football_shop/screens/menu.dart';
 
 void main() {
   runApp(const FootballShopApp());
@@ -14,10 +14,14 @@ class FootballShopApp extends StatelessWidget {
       title: 'Football Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-            .copyWith(secondary: Colors.blueAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.orange,
+          foregroundColor: Colors.white,
+        ),
       ),
-      home: MyHomePage(), // perintah tutorial: cukup MyHomePage(), non-const
+      home: MyHomePage(),
     );
   }
 }
