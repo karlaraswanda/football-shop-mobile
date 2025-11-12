@@ -129,8 +129,11 @@ class ItemCard extends StatelessWidget {
               message = "Kamu telah menekan tombol My Products";
               break;
             case "Create Product":
-              message = "Kamu telah menekan tombol Create Product";
-              break;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProductFormPage()),
+              );
+              return;
             default:
               message = "Kamu telah menekan tombol ${item.name}";
           }
@@ -138,13 +141,6 @@ class ItemCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(content: Text(message)));
-          
-          if (item.name == "Create Product") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ProductFormPage()),
-          );
-          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),

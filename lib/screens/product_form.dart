@@ -125,10 +125,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 ),
                 keyboardType: TextInputType.url,
                 validator: (v) {
-                  if (v == null || v.trim().isEmpty) return null;
+                  if (v == null || v.trim().isEmpty) {
+                    return 'Thumbnail URL tidak boleh kosong';
+                  }
                   final uri = Uri.tryParse(v.trim());
-                  if (uri == null || !uri.hasScheme || !uri.hasAuthority) {
-                    return 'URL tidak valid';
+                  if (uri == null || !(uri.isScheme('http') || uri.isScheme('https'))) {
+                    return 'Masukkan URL yang valid (http/https)';
                   }
                   return null;
                 },
