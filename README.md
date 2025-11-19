@@ -8,7 +8,7 @@ _Mata Kuliah: Platform-Based Programming (PBP)_
 
 ---
 
-## Tugas 7: Elemen Dasar Flutter  
+# Tugas 7: Elemen Dasar Flutter  
 
 ## 1. **Apa yang dimaksud dengan _widget tree_ dan bagaimana hubungan antara parent dan child pada Flutter?**  
 Widget tree adalah struktur hierarki (seperti family tree) yang menggambarkan bagaimana setiap _widget_ (komponen tampilan) tersusun di dalam aplikasi.  
@@ -52,7 +52,7 @@ Fungsinya: mengakses data dari parent, seperti tema warna (`Theme.of(context)`) 
 
 ---
 
-## Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements  
+# Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements  
 
 ## 1. **Jelaskan perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()` pada Flutter.**  
 - **`Navigator.push()`** → menambahkan halaman baru **di atas** stack navigasi jadi user masih bisa kembali ke halaman sebelumnya dengan tombol **Back**.  
@@ -83,3 +83,65 @@ theme: ThemeData(
     foregroundColor: Colors.white,
   ),
 ),
+```
+
+---
+
+# Tugas 9 – Integrasi Layanan Web Django dengan Aplikasi Flutter
+
+## 1. Mengapa perlu membuat model Dart untuk JSON?
+- Model Dart menjaga **konsistensi tipe data**, sehingga tidak terjadi error runtime akibat tipe yang tidak sesuai.
+- Mendukung **null-safety**; tanpa model, semua akses menjadi `dynamic` dan raw.
+- Lebih **maintainable**: perubahan struktur JSON cukup diperbarui pada satu file model.
+- Akses atribut lebih aman (`product.name` dibanding `json['name']`).
+
+## 2. Fungsi `http` vs `CookieRequest`
+- **`http`**
+  - Untuk request umum tanpa autentikasi.
+  - Digunakan untuk GET/POST publik dan fetch gambar.
+- **`CookieRequest`**
+  - Menyimpan dan mengirim session cookie Django.
+  - Wajib untuk login, register, logout, dan endpoint lain yang butuh autentikasi.
+
+## 3. Mengapa instance `CookieRequest` dibagikan ke seluruh aplikasi?
+- Menjamin seluruh halaman memakai **session login yang sama**.
+- Status login (`loggedIn`, cookie, username) konsisten di semua screen.
+- Menghindari bug login/logout yang tidak sinkron.
+- Logout cukup menghapus session di satu tempat → seluruh app ikut logout.
+
+## 4. Konfigurasi konektivitas Flutter dengan Django
+- **`10.0.2.2` di ALLOWED_HOSTS**: agar Android emulator bisa mengakses server Django di host.
+- **Mengaktifkan CORS**: mengizinkan request cross-origin dari Flutter/Chrome.
+- **Cookie SameSite = None + Secure**: agar session cookie boleh dikirim oleh browser modern.
+- **Izin `INTERNET`** di Android: mengizinkan request Flutter Android.
+
+**Jika konfigurasi salah:**
+- CORS blocked → JSON tidak bisa di-fetch.  
+- Session tidak dikirim → login gagal terus.  
+- Emulator tidak bisa akses server → 400 Bad Request.
+
+## 5. Mekanisme input → Django → kembali ke Flutter
+1. User mengisi form pada Flutter.
+2. Flutter validasi dan mengirim JSON ke Django dengan `request.postJson`.
+3. Django membaca data (`json.loads`), memvalidasi, lalu menyimpan ke database.
+4. Django mengirim JSON respons.
+5. Flutter menerima respons → menampilkan snackbar / redirect ke halaman lain.
+
+## 6. Mekanisme autentikasi (login, register, logout)
+1. Register
+- Flutter kirim username & password → Django membuat user → Flutter kembali ke halaman Login.
+2. Login
+- Flutter kirim username & password → Django autentikasi → Django mengirim cookie session.
+- `CookieRequest` menyimpan cookie tersebut → Flutter redirect ke Home.
+3. Logout
+- Flutter memanggil endpoint logout → Django menghapus session → `CookieRequest` menghapus cookie → Flutter kembali ke LoginPage.
+
+## 7. Step-by-step implementasi checklist secara bertahap
+1. Menyiapkan Django (auth views, CORS, cookie, endpoint JSON, endpoint create-flutter).  
+2. Menyiapkan Flutter (provider, CookieRequest, login & register).  
+3. Membuat model Dart (`ProductEntry`) dari JSON Django.  
+4. Membuat halaman daftar item + card item.  
+5. Membuat halaman detail item dan menghubungkan card → detail.  
+6. Menghubungkan form produk ke Django melalui POST JSON.  
+7. Membuat tombol Logout dan menghubungkannya ke endpoint Django.  
+8. Testing end-to-end: register → login → lihat produk → tambah produk → logout.
