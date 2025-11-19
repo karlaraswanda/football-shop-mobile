@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:football_shop/widgets/left_drawer.dart';
 import 'package:football_shop/screens/product_form.dart';
+import 'package:football_shop/screens/product_entry_list.dart';
+import 'package:football_shop/screens/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 // Model button
 class ItemHomepage {
@@ -18,13 +22,14 @@ class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = const [
     ItemHomepage("All Products", Icons.list_alt, Colors.blue),  
     ItemHomepage("My Products", Icons.inventory_2, Colors.green), 
-    ItemHomepage("Create Product", Icons.add_box, Colors.red), 
+    ItemHomepage("Create Product", Icons.add_box, Colors.red),
+    ItemHomepage("Logout", Icons.logout, Colors.grey),
   ];
 
   // Info identitas
-  // final String npm = "2406414542";
-  // final String nama = "Karla Ameera Raswanda";
-  // final String kelas = "PBP E";
+  final String npm = "2406414542";
+  final String nama = "Karla Ameera Raswanda";
+  final String kelas = "PBP E";
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +50,14 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // 3 info cards
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     InfoCard(title: 'NPM', content: npm),
-            //     InfoCard(title: 'Name', content: nama),
-            //     InfoCard(title: 'Class', content: kelas),
-            //   ],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InfoCard(title: 'NPM', content: npm),
+                InfoCard(title: 'Name', content: nama),
+                InfoCard(title: 'Class', content: kelas),
+              ],
+            ),
             const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.only(top: 16),
@@ -66,7 +70,7 @@ class MyHomePage extends StatelessWidget {
 
             // Grid
             GridView.count(
-              crossAxisCount: 3,
+              crossAxisCount: 4,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               shrinkWrap: true,
@@ -118,29 +122,70 @@ class ItemCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () {
-          // Snackbar
-          String message;
-          switch (item.name) {
-            case "All Products":
-              message = "Kamu telah menekan tombol All Products";
-              break;
-            case "My Products":
-              message = "Kamu telah menekan tombol My Products";
-              break;
-            case "Create Product":
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ProductFormPage()),
-              );
-              return;
-            default:
-              message = "Kamu telah menekan tombol ${item.name}";
+        onTap: () async {
+          final request = context.read<CookieRequest>();
+
+          if (item.name == "All Products") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ProductEntryListPage(),
+              ),
+            );
+            return;
           }
 
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(message)));
+          else if (item.name == "My Products") {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(content: Text("Kamu telah menekan tombol My Products")),
+              );
+            return;
+          }
+
+          else if (item.name == "Create Product") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProductFormPage()),
+            );
+            return;
+          }
+
+          else if (item.name == "Logout") {
+            final response = await request.logout(
+              "http://localhost:8000/auth/logout/",
+            );
+
+            if (response["status"] == true && context.mounted) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(content: Text("Logged out successfully!")),
+                );
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              );
+            } else {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  const SnackBar(content: Text("Logout failed.")),
+                );
+            }
+
+            return;
+          }
+
+          else {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text("Kamu menekan tombol ${item.name}")),
+              );
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/left_drawer.dart';
+import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:football_shop/screens/menu.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -42,6 +46,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(title: const Text('Tambah Produk')),
       drawer: const LeftDrawer(),
@@ -165,48 +170,46 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
               // SAVE BUTTON
               ElevatedButton(
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final name = _nameC.text.trim();
                     final price = int.parse(_priceC.text.trim());
                     final desc = _descC.text.trim();
                     final thumb = _thumbC.text.trim();
 
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: const Text('Product Saved'),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Name: $name'),
-                            Text('Price: $price'),
-                            Text('Category: $_category'),
-                            Text('Featured: ${_isFeatured ? "Yes" : "No"}'),
-                            if (thumb.isNotEmpty) Text('Thumbnail: $thumb'),
-                            const SizedBox(height: 8),
-                            const Text('Description:'),
-                            Text(desc),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _resetForm();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Produk tersimpan'),
-                                ),
-                              );
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
+                    final response = await request.postJson(
+                      "http://localhost:8000/create-flutter/",
+                      jsonEncode({
+                        "name": name,
+                        "price": price,
+                        "description": desc,
+                        "thumbnail": thumb,
+                        "category": _category,
+                        "is_featured": _isFeatured,
+                        "brand": "",
+                        "stock": 0,
+                        "size": "",
+                      }),
                     );
+
+                    if (!context.mounted) return;
+
+                    if (response['status'] == 'success') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Product successfully saved!")),
+                      );
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Something went wrong, please try again."),
+                        ),
+                      );
+                    }
                   }
                 },
                 child: const Text('Save'),
