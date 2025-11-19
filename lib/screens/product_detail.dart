@@ -11,7 +11,7 @@ class ProductDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Detail'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: const Color(0xFF34699A),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -42,13 +42,10 @@ class ProductDetailPage extends StatelessWidget {
                   // Featured badge
                   if (product.isFeatured)
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 6.0,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                       margin: const EdgeInsets.only(bottom: 12.0),
                       decoration: BoxDecoration(
-                        color: Colors.amber,
+                        color: const Color(0xFFFDF5AA),
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: const Text(
@@ -56,6 +53,7 @@ class ProductDetailPage extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
+                          color: Color(0xFF7A6400),
                         ),
                       ),
                     ),
@@ -66,6 +64,7 @@ class ProductDetailPage extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
+                      color: Color(0xFF113F67),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -74,20 +73,17 @@ class ProductDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                          vertical: 4.0,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
                         decoration: BoxDecoration(
-                          color: Colors.indigo.shade100,
+                          color: const Color(0xFF34699A),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: Text(
                           product.category.toUpperCase(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.indigo.shade700,
+                            color: Colors.white,
                           ),
                         ),
                       ),

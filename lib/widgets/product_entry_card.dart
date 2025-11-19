@@ -20,7 +20,7 @@ class ProductEntryCard extends StatelessWidget {
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(color: Colors.grey.shade300),
+            side: const BorderSide(color: Color(0xFF58A0C8)),
           ),
           elevation: 2,
           child: Padding(
@@ -52,6 +52,7 @@ class ProductEntryCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
+                    color: Color(0xFF113F67), // brand-900
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -83,13 +84,21 @@ class ProductEntryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
 
-                // Featured indicator
+                // Featured
                 if (product.isFeatured)
-                  const Text(
-                    'Featured',
-                    style: TextStyle(
-                      color: Colors.amber,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFDF5AA),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: const Text(
+                      'Featured',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Color(0xFF7A6400),
+                      ),
                     ),
                   ),
               ],

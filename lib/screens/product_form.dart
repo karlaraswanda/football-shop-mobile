@@ -61,8 +61,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
               TextFormField(
                 controller: _nameC,
                 decoration: const InputDecoration(
-                  labelText: 'Product Name',
-                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2), // brand-500
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2), // brand-700
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
                 ),
                 textInputAction: TextInputAction.next,
                 validator: (v) {
@@ -81,10 +90,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
               TextFormField(
                 controller: _priceC,
                 decoration: const InputDecoration(
-                  labelText: 'Price',
-                  hintText: 'Misal: 199000',
-                  border: OutlineInputBorder(),
+                labelText: 'Price',
+                hintText: 'e.g. 199000',
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF34699A), width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
+              ),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: (v) {
@@ -104,7 +122,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 controller: _descC,
                 decoration: const InputDecoration(
                   labelText: 'Description',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
                 ),
                 minLines: 3,
                 maxLines: 6,
@@ -126,7 +153,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 decoration: const InputDecoration(
                   labelText: 'Thumbnail URL',
                   hintText: 'https://...',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
                 ),
                 keyboardType: TextInputType.url,
                 validator: (v) {
@@ -147,7 +183,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 value: _category,
                 decoration: const InputDecoration(
                   labelText: 'Category',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
                 ),
                 items: const [
                   DropdownMenuItem(value: 'Shoes', child: Text('Shoes')),

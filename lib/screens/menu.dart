@@ -20,10 +20,9 @@ class MyHomePage extends StatelessWidget {
 
   // Data button
   final List<ItemHomepage> items = const [
-    ItemHomepage("All Products", Icons.list_alt, Colors.blue),  
-    ItemHomepage("My Products", Icons.inventory_2, Colors.green), 
-    ItemHomepage("Create Product", Icons.add_box, Colors.red),
-    ItemHomepage("Logout", Icons.logout, Colors.grey),
+    ItemHomepage("All Products", Icons.list_alt, Color(0xFF34699A)),
+    ItemHomepage("My Products", Icons.inventory_2, Color(0xFF58A0C8)),
+    ItemHomepage("Create Product", Icons.add_box, Color(0xFF113F67)),
   ];
 
   // Info identitas
