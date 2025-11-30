@@ -58,13 +58,13 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF113F67),
-                    ),
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF113F67),
                   ),
+                ),
                   const SizedBox(height: 30.0),
                   TextField(
                     controller: _usernameController,
@@ -94,19 +94,27 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF34699A),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     onPressed: () async {
                       String username = _usernameController.text;
                       String password = _passwordController.text;
 
-                      // Check credentials
-                      // TODO: Change the URL and don't forget to add trailing slash (/) at the end of URL!
-                      // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
-                      // If you using chrome,  use URL http://localhost:8000
-                      final response = await request
-                          .login("http://localhost:8000/auth/login/", {
-                        'username': username,
-                        'password': password,
-                      });
+                      final response = await request.login(
+                        "http://localhost:8000/auth/login/",
+                        {
+                          'username': username,
+                          'password': password,
+                        },
+                      );
 
                       if (request.loggedIn) {
                         String message = response['message'];
@@ -115,14 +123,15 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyHomePage()),
+                              builder: (context) => const MyHomePage(),
+                            ),
                           );
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(
                               SnackBar(
-                                  content:
-                                      Text("$message Welcome, $uname.")),
+                                content: Text("$message Welcome, $uname."),
+                              ),
                             );
                         }
                       } else {
@@ -145,12 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       }
                     },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, 50),
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
                     child: const Text('Login'),
                   ),
                   const SizedBox(height: 36.0),

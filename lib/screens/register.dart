@@ -45,8 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   const Text(
                     'Register',
                     style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Color(0xFF113F67),
                     ),
                   ),
                   const SizedBox(height: 30.0),
@@ -110,22 +111,30 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF34699A),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     onPressed: () async {
                       String username = _usernameController.text;
                       String password1 = _passwordController.text;
                       String password2 = _confirmPasswordController.text;
-
-                      // Check credentials
-                      // TODO: Change the URL and don't forget to add trailing slash (/) at the end of URL!
-                      // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
-                      // If you using chrome,  use URL http://localhost:8000       
+  
                       final response = await request.postJson(
-                          "http://localhost:8000/auth/register/",
-                          jsonEncode({
-                            "username": username,
-                            "password1": password1,
-                            "password2": password2,
-                          }));
+                        "http://localhost:8000/auth/register/",
+                        jsonEncode({
+                          "username": username,
+                          "password1": password1,
+                          "password2": password2,
+                        }),
+                      );
+
                       if (context.mounted) {
                         if (response['status'] == 'success') {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -136,7 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                              builder: (context) => const LoginPage(),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -147,12 +157,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                       }
                     },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, 50),
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
                     child: const Text('Register'),
                   ),
                 ],

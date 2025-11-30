@@ -65,11 +65,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2), // brand-500
+                    borderSide: BorderSide(color: Color(0xFF58A0C8), width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(6)),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2), // brand-700
+                    borderSide: BorderSide(color: Color(0xFF34699A), width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(6)),
                   ),
                 ),

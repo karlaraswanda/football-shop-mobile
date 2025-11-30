@@ -12,9 +12,9 @@ class LeftDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              color: Color(0xFF34699A),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,27 +22,32 @@ class LeftDrawer extends StatelessWidget {
                 Text(
                   'Football Shop',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'Menu utama',
                   style: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onPrimary
-                        .withOpacity(0.8),
+                    color: Colors.white70,
                   ),
                 ),
               ],
             ),
           ),
+
+          // HOME
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
+            leading: const Icon(Icons.home, color: Color(0xFF113F67)),
+            title: const Text(
+              'Home',
+              style: TextStyle(
+                color: Color(0xFF113F67),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -50,9 +55,17 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
+
+          // TAMBAH PRODUK
           ListTile(
-            leading: const Icon(Icons.add),
-            title: const Text('Tambah Produk'),
+            leading: const Icon(Icons.add, color: Color(0xFF113F67)),
+            title: const Text(
+              'Tambah Produk',
+              style: TextStyle(
+                color: Color(0xFF113F67),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
@@ -60,14 +73,21 @@ class LeftDrawer extends StatelessWidget {
               );
             },
           ),
+
+          // PRODUCT LIST
           ListTile(
-            leading: const Icon(Icons.add_reaction_rounded),
-            title: const Text('Product List'),
+            leading: const Icon(Icons.inventory_2, color: Color(0xFF113F67)),
+            title: const Text(
+              'Product List',
+              style: TextStyle(
+                color: Color(0xFF113F67),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             onTap: () {
-              // Route to product list page
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ProductEntryListPage()),
+                MaterialPageRoute(builder: (_) => const ProductEntryListPage()),
               );
             },
           ),
